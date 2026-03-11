@@ -1,0 +1,107 @@
+﻿n===== FILE: C:\1\services\dateFormat.service.js =====n
+const localeDate = date =>
+{
+    return new Date(date).toLocaleString('ru', {
+        hour: "numeric",
+        minute: "numeric",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    })
+}
+
+export default localeDate
+
+n===== FILE: C:\1\services\http-common.js =====n
+import axios from 'axios';
+
+// Put your backend url here
+export const API_URL = `http://localhost:8000/api`
+
+const $api = axios.create({
+    withCredentials: true,
+    baseURL: API_URL,
+    timeout: 30000, 
+})
+
+$api.interceptors.request.use((config) => {    
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`        
+    return config;
+})
+
+
+export default $api;
+n===== FILE: C:\1\services\language.service.js =====n
+const LANG_KEY = 'lang'
+
+/**
+ * Manage the how UI language is being stored and retrieved from storage.
+ *
+ * Current implementation stores to localStorage. Local Storage should always be
+ * accessed through this instance.
+ **/
+const LanguageService = {
+  getLanguage() {
+    return localStorage.getItem(LANG_KEY)
+  },
+  saveLanguage(lang) {
+    localStorage.setItem(LANG_KEY, lang)
+  }
+}
+
+export { LanguageService }
+
+n===== FILE: C:\1\services\storage.service.js =====n
+const TOKEN_KEY = 'token'
+
+
+/**
+ * Manage the how Access Tokens are being stored and retrieved from storage.
+ *
+ * Current implementation stores to localStorage. Local Storage should always be
+ * accessed through this instance.
+ **/
+const TokenService = {
+  getToken() {
+    return localStorage.getItem(TOKEN_KEY)
+  },
+
+  saveToken(accessToken) {
+    localStorage.setItem(TOKEN_KEY, accessToken)
+    //console.log(accessToken,'accessToken')
+  },
+
+  removeToken() {
+    localStorage.removeItem(TOKEN_KEY)
+  }
+}
+
+export { TokenService }
+
+n===== FILE: C:\1\services\user.service.js =====n
+const USER_KEY = 'user'
+
+/**
+ * Manage the how user data is being stored and retrieved from storage.
+ *
+ * Current implementation stores to localStorage. Local Storage should always be
+ * accessed through this instance.
+ **/
+const UserService = {
+  getUser() {
+    return localStorage.getItem(USER_KEY)
+  },
+
+  saveUser(user) {
+    localStorage.setItem(USER_KEY, user)
+    
+  },
+
+  removeUser() {
+    localStorage.removeItem(USER_KEY)
+    
+  }
+}
+
+export { UserService }
+

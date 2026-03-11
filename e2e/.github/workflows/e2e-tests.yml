@@ -1,0 +1,165 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 2 * * *'
+
+env:
+  APP_URL: http://localhost:8000
+  DB_HOST: localhost
+  DB_PORT: 5432
+  DB_DATABASE: lms2025_db
+  DB_USERNAME: lms
+  DB_PASSWORD: lms
+  TEST_ADMIN_EMAIL: admin@test.com
+  TEST_ADMIN_PASSWORD: password123
+  CI: true
+
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: lms
+          POSTGRES_PASSWORD: lms
+          POSTGRES_DB: lms2025_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Create .env file
+        run: |
+          cp .env.example .env
+          echo "APP_URL=http://localhost:8000" >> .env
+          echo "DB_CONNECTION=pgsql" >> .env
+          echo "DB_HOST=localhost" >> .env
+          echo "DB_PORT=5432" >> .env
+          echo "DB_DATABASE=lms2025_db" >> .env
+          echo "DB_USERNAME=lms" >> .env
+          echo "DB_PASSWORD=lms" >> .env
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Run migrations
+        run: php artisan migrate:fresh --seed
+
+      - name: Start Laravel server
+        run: php artisan serve --host=0.0.0.0 --port=8000 &
+        timeout-minutes: 2
+
+      - name: Wait for server
+        run: sleep 10
+
+      - name: Run Smoke Tests
+        run: npm run test:smoke --prefix e2e
+
+      - name: Run Auth Tests
+        run: npm run test:auth --prefix e2e
+
+      - name: Run CRUD Tests
+        run: npm run test:crud --prefix e2e
+
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: e2e/playwright-report
+          retention-days: 30
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: e2e/test-results
+          retention-days: 30
+
+  puppeteer:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: lms
+          POSTGRES_PASSWORD: lms
+          POSTGRES_DB: lms2025_db
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Puppeteer
+        run: npm install puppeteer --prefix e2e
+
+      - name: Create .env file
+        run: |
+          cp .env.example .env
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Run migrations
+        run: php artisan migrate:fresh --seed
+
+      - name: Start Laravel server
+        run: php artisan serve --host=0.0.0.0 --port=8000 &
+        timeout-minutes: 2
+
+      - name: Wait for server
+        run: sleep 10
+
+      - name: Run Puppeteer Tests
+        run: npm run puppeteer:test --prefix e2e
+
+      - name: Upload Screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: puppeteer-screenshots
+          path: e2e/test-results/puppeteer
+          retention-days: 7

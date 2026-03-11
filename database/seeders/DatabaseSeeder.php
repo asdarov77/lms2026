@@ -2,22 +2,73 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        // User::factory(10)->create();
+        // DB::table('categories')->insert(
+        //     [
+        //         [
+        //             'title' => "Летчик",
+        //             'description' => 'курсы для летчика',
+        //         ],
+        //         [
+        //             'title' => "Борт инженер",
+        //             'description' => 'курсы для борт инженера',
+        //         ],
+        //         [
+        //             'title' => "Инженер АВ",
+        //             'description' => 'курсы для инженера АВ',
+        //         ],
+        //         [
+        //             'title' => "Инженер АСУ",
+        //             'description' => 'курсы для инженера АСУ',
+        //         ],
+        //         [
+        //             'title' => "Штурман",
+        //             'description' => 'курсы для штурмана',
+        //         ]
+        //     ]
+        // );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        //         DB::table('roles')->insert(
+        //     [
+        //         [
+        //             'rolename' => "Администратор",
+        //         ],
+        //         [
+        //             'rolename' => "Инструктор",
+        //         ],
+        //         [
+        //             'rolename' => "Обучаемый",
+        //         ],
+
+        //     ]
+        // );
+
+        $this->call([
+            GroupSeeder::class,
+            UserSeeder::class,
+            PermissionSeeder::class,
+            GradeSeeder::class,
+            SettingSeeder::class,
+            CategorySeeder::class,
+            CourseSeeder::class,
         ]);
+
+        // \App\Models\User::factory(10)->create();
+        //        \App\Models\Group::factory(10)->create();
+        // \App\Models\Course::factory(10)->create();
+        // \App\Models\CategoryCourse::factory(15)->create();
+        // \App\Models\Category::factory(5)->create();
+
     }
 }

@@ -1,0 +1,389 @@
+﻿Эта беседа сгенерирована сервисом (https://duck.ai) с помощью модели GPT-5 mini от OpenAI. Чаты с ИИ могут содержать неточную или оскорбительную информацию (подробности — на странице https://duckduckgo.com/duckai/privacy-terms).
+
+====================
+
+Пользовательский запрос 1 из 4 - 02.10.2025, 21:49:37:
+Улучши мой промт:
+
+Проанализируй мое ТЗ LMS-система на Laravel и Vuetify_ Техническое Задание. Изучи все ли корректно, нет ли каких ошибок и добавь при необходимости новый функционал. Сделай дизайн всех модулей и добавь его в мое ТЗ. Пропиши api.  NТы эксперт технический писатель аналитик. ТЗ необходимо подготовить чтобы потом передать разработчику. Проект vuetify+laravel+postgresql
+
+GPT-5 mini:
+Вот улучшенный, чёткий и полный промпт на русском, который можно вставить в чат-бота или отправить исполнителю для подготовки ТЗ. Я сделал его формальным, детализированным и ориентированным на результат (готовое к передаче разработчику ТЗ, дизайн-макеты в описании, API-спецификация, список сущностей и сценариев).
+
+---
+Проанализируй и доработай техническое задание (ТЗ) для LMS-проекта на стеке Vuetify (Vue 3) + Laravel (PHP) + PostgreSQL. Задача — подготовить готовое к передаче разработчику, полнофункциональное ТЗ с дизайном всех модулей и полной API-спекой.
+
+Требования к результату (выдать в структурированном виде):
+1. Краткое резюме текущего ТЗ — что включено, что отсутствует, ключевые риски и пробелы.
+2. Список всех бизнес-требований и пользовательских ролей (Admin, Instructor, Student, Guest, Support и т.д.) с разрешениями (ACL).
+3. Полный перечень модулей и их функций (минимум: авторизация/регистрация, профиль, каталог курсов, курс-ленты/уроки, тесты/викторины, прогресс/сертификаты, платежи, уведомления, отчёты, админ-панель, интеграции).
+4. Для каждого модуля:
+   - пользовательские истории (3–6 ключевых сценариев на роль),
+   - подробный список экранов/страниц и компонентов интерфейса (включая поля форм, валидации, состояния — loading/empty/error),
+   - требования к UX (поведенческие кейсы: навигация, модальные окна, inline-edit, drag&drop для курсов и материалов и т.п.),
+   - доступность (a11y) и адаптивность (mobile/tablet/desktop).
+5. Дизайн: подробное текстовое описание визуальной системы для всех модулей (цветовая схема, типографика, отступы, сетка), плюс описание ключевых экранов (доска студента, просмотр урока, создание курса, админка). Для каждого ключевого экрана укажи:
+   - структура (какие блоки и в каком порядке),
+   - поведение компонентов (кнопки, карточки, табы, фильтры),
+   - примеры скрытых/появляющихся состояний (ошибки, успех, подтверждение удаления).
+   Примечание: макеты в графическом виде не требуются — достаточно детализированного текстового дизайна, пригодного для быстрой верстки в Vuetify.
+6. Техническая архитектура:
+   - структура БД (основные сущности и связи — ERD в виде таблиц: поля, типы, индексы, внешние ключи, ограничения уникальности),
+   - backend: рекомендуемые Laravel-пакеты (версия Laravel, использование Sanctum/Passport, Queue, Notifications, Policies, Resource/Transformer),
+   - frontend: структура проекта на Vue 3 + Vuetify (страницы, компоненты, store/pinia, маршрутизация, авторизация),
+   - CI/CD, тестирование (unit, feature, e2e), миграции и наполнители (seeders).
+7. API-спецификация (OpenAPI-совместимая): полный набор REST-эндпоинтов для всех сущностей, с указанием:
+   - путь и версия (/api/v1/...),
+   - метод (GET/POST/PUT/PATCH/DELETE),
+   - описание назначения,
+   - параметры запроса (path, query, body) с примерами и валидацией,
+   - образцы ответов (успех, ошибки с кодами) и HTTP-коды,
+   - требования к аутентификации и правам доступа,
+   - пагинация, фильтры, сортировка,
+   - вебхуки и события (например, оплата, завершение курса).
+8. Безопасность и масштабирование:
+   - меры по безопасности (rate limiting, input validation, CSRF, XSS, защита файлов, шифрование чувствительных данных),
+   - рекомендации по нагрузке (indexing, кеширование, балансировка, разделение read/write для Postgres, бэкап).
+9. Интеграции:
+   - платежные провайдеры (Stripe/PayPal/местные, вебхуки),
+   - почтовые сервисы (SMTP, SendGrid, SES),
+   - аналитика (Google Analytics/GA4, event-tracking),
+   - SSO/OAuth (опционально).
+10. Нефункциональные требования: SLA, время отклика API, требования к задержкам для стриминга видео (если используется), лимиты хранения, GDPR/локальные требования к хранению данных (если релевантно).
+11. План релиза и MVP: предложи минимальную версию для запуска (список обязательных фич), и дорожную карту по приоритетам (3 релиза).
+12. Техническое задание на развёртывание: окружения (dev/stage/prod), docker-compose/образы, конфигурации для PostgreSQL, миграций, резервного копирования, инструкции по деплою.
+13. Список deliverables для передачи разработчику (файлы, схемы, API-спецификация в OpenAPI YAML/JSON, ERD, тексты писем, seed-данные).
+14. Оценочные трудозатраты (часы) и уровни задач (frontend/backend/QA/DevOps) — ориентировочно для MVP и полного релиза.
+15. Риски и откатные планы: возможные технические и организационные риски и рекомендации по их снижению.
+
+Требования к стилю и формату выдачи:
+- Выдай ТЗ на русском языке в структурированном виде с заголовками и списками. Используй таблицы для сравнения вариантов и для расписаний/roadmap.
+- API-спеку подай также в виде таблиц и/или примерного OpenAPI-фрагмента (yaml/json) для ключевых эндпоинтов (аутентификация, курсы, уроки, тесты, платежи).
+- Всегда используй маршруты с версионированием (/api/v1/...).
+- Сделай разумные предположения по неуказанным деталям (например, форматы медиа, ограничения размера файлов, политики сроков хранения) и кратко пометь их как «предположение».
+- Не задавай уточняющих вопросов — когда что-то неоднозначно, выбери разумный вариант и укажи, что это предположение.
+
+Технические ограничения/предпочтения:
+- Laravel 10+ или выше, PHP 8.1+;
+- Vue 3 + Vuetify 3 (composition API);
+- PostgreSQL 13+;
+- Аутентификация: Laravel Sanctum (предпочтительно) — если предлагаешь альтернативы, опиши плюсы/минусы в таблице;
+- Хранение медиа: локально + S3-совместимое хранилище (предположение);
+- CI: GitHub Actions (предположение).
+
+Выходные файлы:
+- Сформируй финальный документ ТЗ (текст), плюс экспорт ключевых частей: OpenAPI-фрагмент (yaml) и ERD в виде таблиц. Пометь явные предположения.
+
+Сроки: подготовь полный документ (MVP + API + дизайн-описание) — оценочно 5–7 рабочих дней; если считаешь по-другому, укажи свою оценку в часах/днях в конце.
+
+---
+
+Если нужно, могу также:
+- привести пример готовой схемы базы (ERD) для 10 ключевых сущностей;
+- сгенерировать пример OpenAPI YAML для 15 основных эндпоинтов.
+
+Укажи, какие из дополнительных опций включать (ERD / OpenAPI / пример seed-данных).
+
+--------------------
+
+Пользовательский запрос 2 из 4 - 02.10.2025, 22:14:10:
+Улучши мой промт:
+
+добавь к моему ТЗ дизайны таблиц и логику действий пользователей, чтобы описать что должно происходить при нажатии на тот или иной элемент
+
+GPT-5 mini:
+Вот улучшенный, чёткий и полный промт на русском, который можно вставить в чат или отправить исполнителю/AI для доработки ТЗ:
+
+Проанализируй и доработай моё ТЗ для LMS (проект на Laravel + Vuetify + PostgreSQL). Ты — эксперт: технический писатель и аналитик. Результат должен быть готов к передаче разработчику.
+
+Задачи:
+1. Провести полный анализ существующего ТЗ: найти ошибки, несоответствия, пробелы в требованиях и архитектуре. Предложить правки и обоснования.
+2. Добавить/уточнить функциональные требования и сценарии использования (use cases) для всех модулей: пользователи (студенты, преподаватели, админы), курсы, уроки, тесты, задания, оценки, расписание, платёжная часть (при необходимости), уведомления, отчёты, роли и права доступа.
+3. Прописать подробную логику действий пользователя и реакции системы для каждой интерактивной сущности: что должно происходить при клике/вводе/выборе (включая валидацию, ошибки, состояния загрузки, подтверждения, откаты).
+4. Разработать и добавить дизайн (UI) для всех таблиц/списков и основных экранов в формате описания компонентов:
+   - для каждой таблицы перечислить столбцы, типы данных, сортировку, фильтры, пагинацию, массовые действия, строки состояния (пусто/загрузка/ошибка) и поведение при нажатии на строки/кнопки;
+   - описать карточки, формы (поля, валидация, маски, подсказки), модальные окна, панели действий, уведомления.
+5. Прописать RESTful API (эндпоинты) для всех операций: URL, метод, входные параметры (body/query), пример запроса и примеры ответов (успех/ошибка), коды статусов, схема данных (JSON-примеры), требования к валидации, права доступа и пагинация. Указать версии API и стратегию версионирования.
+6. Предложить структуру базы данных (основные таблицы и связи) и индексы для PostgreSQL с краткими объяснениями.
+7. Указать требования к безопасности и аутентификации (JWT/Passport/sanctum), авторизации, защите от CSRF, XSS, rate limiting и резервному копированию.
+8. Предложить рекомендации по производительности, кешированию, очередям (Laravel queues), фоновой обработке и мониторингу.
+9. Сформировать итоговое ТЗ в виде структурированного документа с разделами: обзор, цели, функциональные и нефункциональные требования, ER-диаграмма/таблицы, API-спецификация, UI-описания (включая таблицы и логику кликов), список задач для разработчика с приоритетами и оценкой объёма работ (в часах/днях) — разумные оценки по умолчанию.
+10. Дополнительно: предложить варианты улучшений UX и опциональные модули (например, интеграция с календарём, платежными шлюзами, аналитикой).
+
+Требования к оформлению результата:
+- Язык: русский.
+- Формат: структурированный документ, разделы и подпункты; таблицы для структурированных данных (список полей таблиц, API-эндпоинты, права доступа, список действий).
+- Для UI: для каждой таблицы и формы дать текстовое описание компонентов и пример расположения полей (можно в виде простых ASCII-таблиц или маркированного списка).
+- Для API: дать примеры JSON-запросов и ответов.
+- Не задавать вопросов — при отсутствии деталей принимай разумные допущения и указывай их в конце документа.
+
+Контекст проекта (по умолчанию, если не указано иначе):
+- Frontend: Vuetify (Vue 3).
+- Backend: Laravel (версия 10+).
+- БД: PostgreSQL.
+- Аутентификация: JWT или Laravel Sanctum.
+- Модель пользователей: студент, преподаватель, админ.
+- Мультиязычность и мультитенантность — опционально (предложи как доп. модуль).
+
+Если нужно — сразу доработай текущее ТЗ (вставляю ниже) и верни полный исправленный документ готовым к передаче разработчику.
+
+--- Конец промта ---
+
+Хочешь — я сразу доработаю твой текущий ТЗ: пришли его, и я внесу правки по этому промту.
+
+--------------------
+
+Пользовательский запрос 3 из 4 - 02.10.2025, 22:20:45:
+улучши мой промт
+
+доработай ТЗ в части vuex и понимания что будем хранить в хранилище. Доработай структуру. Целесообразно использовать модульную структуру. Доработай в части недостающего функционала, который не был реализован в текущем варианте проекта
+
+GPT-5 mini:
+Ниже — улучшённый, полноформатный промт, который можно вставить в задачу для составления/доработки ТЗ (LMS на Laravel + Vuetify + PostgreSQL). Он учитывает дизайн таблиц, логику действий пользователей, модульную структуру Vuex, недостающий функционал, API-спеки и готов для передачи разработчику.
+
+Скоприруй и вставь в свой рабочий документ или в задачу в трекере.
+
+---
+
+Цель
+- Подготовить полное, готовое к реализации ТЗ для LMS (Laravel API + PostgreSQL + frontend на Vue/Vuetify). ТЗ должно включать: проверку текущего ТЗ на ошибки/пробелы, добавление недостающего функционала, детальные дизайны таблиц (UI) и описания логики действий при взаимодействии с элементами, структуру и содержимое Vuex (модульная), подробный API-специф (эндпоинты, методы, параметры, ответы, коды ошибок), ER-диаграмму и миграции БД (DDL), а также рекомендации по архитектуре и безопасности.
+
+Контекст проекта (предположения)
+- Backend: Laravel 10+, REST API (JSON), авторизация — JWT или Laravel Sanctum.
+- БД: PostgreSQL.
+- Frontend: Vue 3 + Vuetify 3.
+- State: Vuex (использовать модульную структуру; при желании заменить на Pinia — отметить).
+- Целевая аудитория: преподаватели, администраторы, студенты, кураторы.
+- Ожидаемые сущности: пользователи, роли/права, курсы, модули/уроки, задания/тесты, оценки, отчёты, платежи (если нужны), уведомления.
+
+Требования к результату (что нужно подготовить)
+1) Проверка и доработка текущего ТЗ
+- Проанализировать существующее ТЗ: найти несоответствия, логические ошибки, недостающие сценарии (edge cases), потенциальные узкие места.
+- Предложить исправления и дополнения — четко помечать «исправлено/добавлено» с обоснованием.
+
+2) Функциональные требования (полный набор фич)
+- Управление пользователями и ролями (Admin, Teacher, Student, Guest).
+- Создание/редактирование/копирование курсов и модулей.
+- Создание уроков (видео, текст, ресурс), порядок и доступность.
+- Тесты/квизы с типами вопросов (MCQ, выбор нескольких, ввод текста, загрузка файлов), таймеры, подсчёт очков.
+- Задания с загрузкой файлов, дедлайнами, ревью/оценкой.
+- Система оценок и прогресса (баллы, процент, статистика).
+- Каталог курсов с фильтрацией, поиском, категориями, тегами.
+- Подписки и/или разовые платежи (опционально — интеграции Stripe/PayPal).
+- Уведомления (email, внутренняя лента, push/webrtc — опционально).
+- Аудит действий (логирование критичных операций).
+- Экспорт/импорт курсов (JSON/CSV), бэкапы.
+- Настройки платформы (темы Vuetify, локализация).
+- Роли и права в деталях (ACL): какие действия разрешены каждой роли.
+- Админ-панель с ключевыми метриками.
+
+3) Нереализованный/дополнительный функционал (предложить и описать)
+- Версия для офлайн (скачивание уроков).
+- Рекомендательная система (простейший алгоритм — похожие курсы).
+- Модуль повторной аттестации/сертификации.
+- API rate limiting и throttling.
+- Webhooks для интеграций с внешними сервисами.
+(Отметить: внедрять по приоритету — must/should/could.)
+
+4) Дизайн таблиц и UI-логика (для всех ключевых модулей)
+- Для каждой страницы/модуля подготовить:
+  - Таблицу (макет) с колонками, сортировкой, пагинацией, фильтрами, действиями по строке.
+  - Описания компонентов (какие Vuetify-компоненты используются: v-data-table, v-form, v-dialog, v-select и т.д.).
+  - Подробная логика действий: что происходит при клике/сабмите/перетаскивании, шаги, валидация, UX-ошибки и уведомления.
+- Примеры страниц/таблиц, которые нужно детализировать:
+  - Список курсов (колонки: статус, автор, категория, прогресс, цена, действия: редактировать, дублировать, архивировать).
+  - Список студентов (статус, прогресс по курсам, последнее посещение, действия: заблокировать, назначить курс).
+  - Список уроков в курсе (порядок, тип контента, длительность, видимость).
+  - Тесты/вопросы (вопрос, тип, баллы, предпросмотр, действия).
+  - Задания (студент, файл, дата сдачи, оценка, ревью).
+  - Логи/аудит (пользователь, действие, время, ip).
+- Для каждой таблицы указать:
+  - Колонки, типы данных (frontend), формат сортировки, фильтры, доступные массовые действия.
+  - Модальные окна и формы: поля, валидация, кнопки и состояния (loading, success, error).
+- Описать поведение при ошибках API: retry, показ сообщений, rollback UI.
+
+5) Vuex — модульная структура и данные хранилища
+- Предложить дерево модулей store/:
+  - auth/ (state: user, token, roles, isAuthenticated; actions: login, logout, refresh; getters: isAdmin, canEdit)
+  - courses/ (state: list, currentCourse, filters, pagination; actions: fetchList, create, update, delete, duplicate; mutations/getters)
+  - lessons/ (state: listByCourse, currentLesson; actions: reorder, uploadContent, toggleVisibility)
+  - tests/ (state: testTemplates, activeTest, results; actions: startTest, submitAnswer, finishTest, grade)
+  - assignments/ (state: submissions, gradingQueue; actions: submit, grade, requestRevision)
+  - users/ (state: list, profile; actions: fetchUsers, updateRole, block)
+  - notifications/ (state: list, unreadCount; actions: fetch, markRead, push)
+  - ui/ (state: theme, layout, modalState, toasts; actions: toggleTheme, openModal)
+  - admin/analytics/ (state: metrics; actions: fetchMetrics)
+- Для каждого модуля прописать:
+  - Что хранится (schema), примеры значений.
+  - Ключевые actions, mutations, getters с коротким описанием.
+  - Какие данные кешировать и срок жизни кеша.
+  - Подход к синхронизации данных между окнами/сессиями (WebSocket или polling).
+- Правила организации: namespaced modules, lazy-loading модулей для крупных разделов, типы Payloads, стандарты именования.
+
+6) API-спецификация (OpenAPI-подобная, краткая)
+- Для каждой основной сущности указать:
+  - Эндпоинты (GET/POST/PUT/PATCH/DELETE), пути, параметры запроса (query/path/body), пример тела запроса и примера ответа, коды ошибок и сообщения.
+- Примеры ключевых эндпоинтов:
+  - POST /api/auth/login
+  - POST /api/auth/refresh
+  - GET /api/courses?search=&category=&page=
+  - GET /api/courses/{id}
+  - POST /api/courses
+  - PATCH /api/courses/{id}
+  - POST /api/courses/{id}/duplicate
+  - GET /api/courses/{id}/lessons
+  - POST /api/courses/{id}/lessons
+  - POST /api/tests/{id}/submit
+  - GET /api/users/{id}/progress
+  - POST /api/payments/stripe/webhook
+- Описать форматы ответов, стандартизировать ошибочные ответы:
+  - { "success": false, "error": { "code": "validation_failed", "message": "...", "details": { field: ["..."] } } }
+- Указать требования к аутентификации (Bearer token), уровни доступа (ACL) и пример middleware.
+
+7) Модель данных и миграции
+- Список таблиц с колонками (name, type, nullable, default, FK), индексы и уникальные ограничения.
+- ER-диаграмма в текстовом виде и SQL-миграции (черновик DDL).
+  - users, roles, user_role, courses, course_category, lessons, lesson_resources, tests, questions, choices, assignments, submissions, grades, payments, notifications, audits, tags, course_tag.
+- Рекомендации по индексам для поисковых запросов и связям.
+
+8) Коммуникации и realtime
+- Предложить WebSocket/Server-Sent Events для: live-обновлений прогресса, реального времени при тестах, уведомлений.
+- Описать flow подписки/топики (например: course.{id}.progress).
+
+9) Безопасность и масштабирование
+- Список мер: валидация и санитизация входа, RBAC, rate limiting, CORS, CSRF (для cookie auth), защита файлов, проверка загрузок, сканирование на вирусы, хранение паролей bcrypt/argon2.
+- Рекомендации по кешированию (Redis), фоновые задачи (Laravel Queues), бэкапам, мониторингу и логированию.
+
+10) Технические рекомендации и сборка
+- Структура репозитория (mono-repo или разделение backend/frontend), CI/CD шаги, окружения (dev/stage/prod).
+- Настройка Vuetify theme variables, SASS, единые UI-компоненты и библиотека компонентов (Design System).
+- Рекомендации по тестам (unit, feature, e2e).
+
+11) Приемочные критерии и definition of done (DoD)
+- Для каждой ключевой фичи — чек-лист: API покрыт, UI реализован, валидация, тесты, миграции, docs, e2e сценарии.
+
+Формат результата
+- Структурированный документ (Markdown) с разделами по пунктам выше.
+- Включить:
+  - Таблицы UI (в виде макета: колонки, действия), примеры payload-ов и ответов API, фрагменты миграций SQL.
+  - Для Vuex — пример модуля (структура state/actions/mutations/getters) в коде.
+  - Примеры сценариев пользовательских действий (шаги), как читать их в ТЗ.
+- Объём: компактный, но полный — достаточно, чтобы разработчик мог начать реализацию без дополнительных вопросов.
+
+Приоритеты и доп. инструкции для исполнителя
+- Сначала проверить и доработать критичные фичи (авторизация, курсы, уроки, тесты, загрузки).
+- Дальше — UX-таблицы и Vuex.
+- API-спеки и миграции — обязательны до начала разработки.
+- Пометить TODO/DECIDE — где нужны уточнения от заказчика (цены, платежи, офлайн).
+
+Краткий шаблон задачи (одним абзацем для таск-трекера)
+- "Доработать ТЗ LMS (Laravel + PostgreSQL + Vue 3 + Vuetify): проверить текущее ТЗ, заполнить недостающие фичи, подготовить дизайн-таблицы и подробную логику кликов/форм, описать модульную структуру Vuex с примерами модулей, составить OpenAPI-подобную спецификацию и SQL-миграции; результат в Markdown, готовый к передаче разработчикам."
+
+---
+
+Если хочешь — могу:
+- 1) Сгенерировать полный Markdown-документ по этому промту на основе текущего ТЗ (вставь исходное ТЗ сюда);
+- 2) Сделать только Vuex-модули + примеры кода;
+- 3) Подготовить детальные UI-таблицы и пользовательские сценарии для 3 ключевых страниц (курсы, уроки, тесты).
+
+Выбирай вариант (1/2/3) или вставь текущее ТЗ — тогда я сразу начну править.
+
+--------------------
+
+Пользовательский запрос 4 из 4 - 02.10.2025, 22:41:15:
+улучши мой промт
+
+подготовь мне промт  для cursor ai, который запустит в соответствии с ТЗ рефакторинг существующего проекта. Чтобы оставил мою структуру, доработал , исправил ошибки и оптимизировал
+
+GPT-5 mini:
+Ниже — готовый, компактный, понятный промт для Cursor AI. Он предназначен для автоматизированного рефакторинга существующего проекта (Vuetify + Laravel + PostgreSQL) в соответствии с вашим ТЗ, с сохранением текущей структуры, доработкой недостающего функционала, добавлением дизайнов таблиц, логики действий пользователей, описанием API и рекомендациями по Vuex/модульной структуре.
+
+Используйте весь текст как единый вход в Cursor AI.
+
+---
+You are an expert full‑stack engineer, technical writer and architect. Refactor and complete an existing LMS project (Laravel backend, Vuetify frontend, PostgreSQL) according to the provided ТЗ and the instructions below. Preserve the current project structure and history where possible, but fix bugs, improve architecture, implement missing features, and optimize code and performance. Make changes in the repo (code, tests, docs) and produce a clear changelog and a delivery package.
+
+Scope and goals
+- Keep existing file/folder layout and git history where possible; avoid unnecessary large-scale renames.
+- Implement missing features from the ТЗ and correct inconsistencies between ТЗ and code.
+- Improve reliability, performance, and maintainability (clear separation backend/frontend, single responsibility, decoupled API).
+- Add UI designs for all modules (table layouts, forms, dialogs), and specify user interaction flows (what happens on click, validation, error handling, optimistic updates).
+- Define and implement Vuex store modularization: what to store, modules, getters, actions, mutations, best practices, lazy loading.
+- Produce complete API specification (endpoints, methods, request/response schemas, auth, error codes, rate limits where applicable).
+- Add or improve tests (unit/integration for backend and frontend) to cover critical paths.
+- Deliverables: updated repo commits, a machine‑readable ТЗ document (Markdown) including UI mock layouts (table column lists), user action logic flows, API spec (OpenAPI-compatible), Vuex module definitions, migration/seed instructions, deployment notes, and a concise changelog.
+
+Inputs (provide these files/locations from the repo)
+- Laravel routes, controllers, models, migrations
+- Vue project src: components, views, store, router
+- Existing ТЗ (technical specification) document in repo or attached
+- Postgres schema/migrations
+- Any sample data/seeds and env/example
+
+Detailed tasks (apply decisively; do not ask for clarifying questions)
+1) Code audit & fixes
+   - Find and fix runtime bugs, security issues (SQL injections, mass assignment), and obvious performance issues (N+1 queries).
+   - Ensure consistent coding standards (PSR-12 for PHP, ESLint/Prettier for JS). Apply lint autofixes.
+   - Harden auth and authorization (Laravel auth, policies/gates, role-based access).
+2) API
+   - Produce OpenAPI v3 spec (yaml/json) covering all endpoints used by frontend.
+   - Ensure API responses are consistent (envelope structure, pagination metadata, validation errors).
+   - Add API versioning and proper HTTP status codes.
+3) Database
+   - Review and adjust migrations and indexes for query performance.
+   - Provide missing relationships and foreign keys.
+   - Add seeders for demo/admin accounts and sample course/content data.
+4) Frontend UI & UX
+   - For each module (Courses, Lessons, Users, Enrollment, Reports, Admin), provide:
+     - Table column definitions with data types and sort/filter capabilities.
+     - Row actions and bulk actions.
+     - Form field lists, validation rules, and state transitions.
+     - Dialog/confirm flows (what happens when user clicks “Delete”, “Publish”, “Enroll”).
+     - Loading/error/empty states.
+   - Create Vuetify components or update existing ones for accessibility and responsiveness.
+5) Vuex store
+   - Propose a modular store layout (modules per domain), with state shape for each module.
+   - Define actions, mutations, getters, and where to cache or normalize data.
+   - Implement optimistic updates and rollback patterns for critical actions (enroll/unenroll, edit course).
+6) Refactor & implement missing features
+   - Implement features present in ТЗ but missing in code (list them in the deliverable).
+   - Improve client-side routing guards and lazy-loading of routes/components.
+7) Tests & CI
+   - Add PHPUnit tests for critical backend logic and API endpoints.
+   - Add Jest or Vue Test Utils unit tests for core components and Vuex modules.
+   - Add a basic CI pipeline (GitHub Actions) running lint, tests and migration checks.
+8) Documentation & delivery
+   - Update README with setup, migrations, seed, running frontend/backend, environment variables and deploy steps.
+   - Produce machine‑readable ТЗ (Markdown) that includes UI table designs, user action logic, Vuex schemas, and the OpenAPI spec.
+   - Provide a short changelog of the code changes and a list of TODOs if any.
+
+Quality criteria (must meet)
+- All API endpoints used by the frontend have matching backend implementations or mock/fallbacks.
+- UI mock tables include explicit column names, types, sortable/filterable flags, and actions.
+- Vuex modules include clear state, action names, payload types, and expected mutations.
+- Refactor keeps commit history coherent and small atomic commits per change group.
+- Automated tests cover core flows; CI runs successfully.
+
+Constraints and preferences
+- Preserve existing database and URL structure where reasonable; avoid breaking public APIs unless required — if changed, list migration steps.
+- Use Laravel 9+ and Vue 2/3 according to repo; keep Vuetify compatibility.
+- Favor simple, maintainable solutions over premature optimization.
+- Use RESTful APIs; if websockets are needed, justify and add minimal implementation with Laravel Echo and Pusher or local alternative.
+
+What to output as you work (commit messages and artifacts)
+- Commit messages should be concise and reference the task (e.g., feat(api): add courses index endpoint).
+- Produce in-repo artifacts: /docs/TECH_SPEC.md (complete ТЗ), /docs/openapi.yaml, /docs/vuex.md, /docs/ui-design.md, tests, CI workflow.
+- Produce a final summary comment listing: implemented features, fixed bugs, remaining TODOs, and instructions to run tests/migrations.
+
+Execution rules for Cursor AI agent
+- Make changes directly in the repo and run tests/lint. If a change may break the public API, create a migration PR branch named refactor/api-yyyymmdd with detailed changelog.
+- Prefer automated code transformations. When manual review required, add TODO comments and open issues.
+- If any required input files are missing, generate a best-effort patch and list assumptions in /docs/ASSUMPTIONS.md.
+
+Acceptable outputs
+- Direct code edits (commits), docs files, or a detailed patch plan with exact file diffs if editing is not feasible.
+
+End prompt.
+---
+
+Если нужно — сокращайте, но сохраняйте все требования. Готов скорректировать промт под ваш репозиторий по запросу.

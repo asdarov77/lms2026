@@ -1,0 +1,82 @@
+﻿You are an expert full‑stack engineer, technical writer and architect. Refactor and complete an existing LMS project (Laravel backend, Vuetify frontend, PostgreSQL) according to the provided ТЗ and the instructions below. Preserve the current project structure and history where possible, but fix bugs, improve architecture, implement missing features, and optimize code and performance. Make changes in the repo (code, tests, docs) and produce a clear changelog and a delivery package.
+
+Scope and goals
+
+Keep existing file/folder layout and git history where possible; avoid unnecessary large-scale renames.
+Implement missing features from the ТЗ and correct inconsistencies between ТЗ and code.
+Improve reliability, performance, and maintainability (clear separation backend/frontend, single responsibility, decoupled API).
+Add UI designs for all modules (table layouts, forms, dialogs), and specify user interaction flows (what happens on click, validation, error handling, optimistic updates).
+Define and implement Vuex store modularization: what to store, modules, getters, actions, mutations, best practices, lazy loading.
+Produce complete API specification (endpoints, methods, request/response schemas, auth, error codes, rate limits where applicable).
+Add or improve tests (unit/integration for backend and frontend) to cover critical paths.
+Deliverables: updated repo commits, a machine‑readable ТЗ document (Markdown) including UI mock layouts (table column lists), user action logic flows, API spec (OpenAPI-compatible), Vuex module definitions, migration/seed instructions, deployment notes, and a concise changelog.
+Inputs (provide these files/locations from the repo)
+
+Laravel routes, controllers, models, migrations
+Vue project src: components, views, store, router
+Existing ТЗ (technical specification) document in repo or attached
+Postgres schema/migrations
+Any sample data/seeds and env/example
+Detailed tasks (apply decisively; do not ask for clarifying questions)
+
+Code audit & fixes
+Find and fix runtime bugs, security issues (SQL injections, mass assignment), and obvious performance issues (N+1 queries).
+Ensure consistent coding standards (PSR-12 for PHP, ESLint/Prettier for JS). Apply lint autofixes.
+Harden auth and authorization (Laravel auth, policies/gates, role-based access).
+API
+Produce OpenAPI v3 spec (yaml/json) covering all endpoints used by frontend.
+Ensure API responses are consistent (envelope structure, pagination metadata, validation errors).
+Add API versioning and proper HTTP status codes.
+Database
+Review and adjust migrations and indexes for query performance.
+Provide missing relationships and foreign keys.
+Add seeders for demo/admin accounts and sample course/content data.
+Frontend UI & UX
+For each module (Courses, Lessons, Users, Enrollment, Reports, Admin), provide:
+Table column definitions with data types and sort/filter capabilities.
+Row actions and bulk actions.
+Form field lists, validation rules, and state transitions.
+Dialog/confirm flows (what happens when user clicks “Delete”, “Publish”, “Enroll”).
+Loading/error/empty states.
+Create Vuetify components or update existing ones for accessibility and responsiveness.
+Vuex store
+Propose a modular store layout (modules per domain), with state shape for each module.
+Define actions, mutations, getters, and where to cache or normalize data.
+Implement optimistic updates and rollback patterns for critical actions (enroll/unenroll, edit course).
+Refactor & implement missing features
+Implement features present in ТЗ but missing in code (list them in the deliverable).
+Improve client-side routing guards and lazy-loading of routes/components.
+Tests & CI
+Add PHPUnit tests for critical backend logic and API endpoints.
+Add Jest or Vue Test Utils unit tests for core components and Vuex modules.
+Add a basic CI pipeline (GitHub Actions) running lint, tests and migration checks.
+Documentation & delivery
+Update README with setup, migrations, seed, running frontend/backend, environment variables and deploy steps.
+Produce machine‑readable ТЗ (Markdown) that includes UI table designs, user action logic, Vuex schemas, and the OpenAPI spec.
+Provide a short changelog of the code changes and a list of TODOs if any.
+Quality criteria (must meet)
+
+All API endpoints used by the frontend have matching backend implementations or mock/fallbacks.
+UI mock tables include explicit column names, types, sortable/filterable flags, and actions.
+Vuex modules include clear state, action names, payload types, and expected mutations.
+Refactor keeps commit history coherent and small atomic commits per change group.
+Automated tests cover core flows; CI runs successfully.
+Constraints and preferences
+
+Preserve existing database and URL structure where reasonable; avoid breaking public APIs unless required — if changed, list migration steps.
+Use Laravel 9+ and Vue 2/3 according to repo; keep Vuetify compatibility.
+Favor simple, maintainable solutions over premature optimization.
+Use RESTful APIs; if websockets are needed, justify and add minimal implementation with Laravel Echo and Pusher or local alternative.
+What to output as you work (commit messages and artifacts)
+
+Commit messages should be concise and reference the task (e.g., feat(api): add courses index endpoint).
+Produce in-repo artifacts: /docs/TECH_SPEC.md (complete ТЗ), /docs/openapi.yaml, /docs/vuex.md, /docs/ui-design.md, tests, CI workflow.
+Produce a final summary comment listing: implemented features, fixed bugs, remaining TODOs, and instructions to run tests/migrations.
+Execution rules for Cursor AI agent
+
+Make changes directly in the repo and run tests/lint. If a change may break the public API, create a migration PR branch named refactor/api-yyyymmdd with detailed changelog.
+Prefer automated code transformations. When manual review required, add TODO comments and open issues.
+If any required input files are missing, generate a best-effort patch and list assumptions in /docs/ASSUMPTIONS.md.
+Acceptable outputs
+
+Direct code edits (commits), docs files, or a detailed patch plan with exact file diffs if editing is not feasible.

@@ -1,0 +1,540 @@
+﻿n===== FILE: C:\1\AircraftSeeder.php =====n
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
+class AircraftSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {        
+        DB::table('aircrafts')->insert([
+            [
+
+                'path' => 'РљР°-52',
+                'title' => 'title РљР°-52',
+            ],
+            [
+
+                'path' => 'РњРё-28',
+                'title' => 'title РњРё-28',
+            ],
+        ]);
+    }
+}
+
+n===== FILE: C:\1\allSeaders.txt =====n
+n===== FILE: C:\1\CategorySeeder.php =====n
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use App\Models\Category;
+
+class CategorySeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('categories')->insert([            
+                    [
+                        'title' => "Р›РµС‚С‡РёРє",
+                        'description' => 'РєСѓСЂСЃС‹ РґР»СЏ Р»РµС‚С‡РёРєР°',
+                    ],
+                    [
+                        'title' => "Р‘РѕСЂС‚ РёРЅР¶РµРЅРµСЂ",
+                        'description' => 'РєСѓСЂСЃС‹ РґР»СЏ Р±РѕСЂС‚ РёРЅР¶РµРЅРµСЂР°',
+                    ],
+                    [
+                        'title' => "РРЅР¶РµРЅРµСЂ РђР’",
+                        'description' => 'РєСѓСЂСЃС‹ РґР»СЏ РёРЅР¶РµРЅРµСЂР° РђР’',
+                    ],
+                    [
+                        'title' => "РРЅР¶РµРЅРµСЂ РђРЎРЈ",
+                        'description' => 'РєСѓСЂСЃС‹ РґР»СЏ РёРЅР¶РµРЅРµСЂР° РђРЎРЈ',
+                    ],
+                    [
+                        'title' => "РЁС‚СѓСЂРјР°РЅ",
+                        'description' => 'РєСѓСЂСЃС‹ РґР»СЏ С€С‚СѓСЂРјР°РЅР°',
+                    ],
+
+                ]);
+            }
+        }
+
+n===== FILE: C:\1\CourseSeeder.php =====n
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+//use App\Models\Category;
+
+class CourseSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('courses')->insert([            
+                    [
+                        'title' => "РџРѕРґРіРѕС‚РѕРІРєР° Рё РІС‹РїРѕР»РЅРµРЅРёРµ РїРѕР»РµС‚Р°. Р‘РѕРµРІРѕРµ РїСЂРёРјРµРЅРµРЅРёРµ",
+                        'short_description' => 'РєСѓСЂСЃС‹ РґР»СЏ Р»РµС‚С‡РёРєР°',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "Р­РєСЃРїР»СѓР°С‚Р°С†РёСЏ РѕР±РѕСЂСѓРґРѕРІР°РЅРёСЏ",
+                        'short_description' => 'РєСѓСЂСЃС‹ РґР»СЏ Р±РѕСЂС‚ РёРЅР¶РµРЅРµСЂР°',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РђРІРёР°С†РёРѕРЅРЅРѕРµ РІРѕРѕСЂСѓР¶РµРЅРёРµ Рё РґРµСЃР°РЅС‚РЅРѕ-С‚СЂР°РЅСЃРїРѕСЂС‚РЅРѕРµ РѕР±РѕСЂСѓРґРѕРІР°РЅРёРµ",
+                        'short_description' => 'РєСѓСЂСЃС‹ РґР»СЏ РёРЅР¶РµРЅРµСЂР° РђР’',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РџРѕРґРіРѕС‚РѕРІРєР° Рє РїРѕР»РµС‚Р°Рј СЃР°РјРѕР»РµС‚Р°, СЃР°РјРѕР»РµС‚РЅС‹С… СЃРёСЃС‚РµРј Рё СЃРёР»РѕРІРѕР№ СѓСЃС‚Р°РЅРѕРІРєРё",
+                        'short_description' => 'РєСѓСЂСЃС‹ РґР»СЏ Р±РѕСЂС‚РѕРІРѕРіРѕ С‚РµС…РЅРёРєР°',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РђРІРёР°С†РёРѕРЅРЅРѕРµ РѕР±РѕСЂСѓРґРѕРІР°РЅРёРµ",
+                        'short_description' => 'РєСѓСЂСЃС‹ РґР»СЏ РђРћ',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РџР»Р°РЅРµСЂ СЃР°РјРѕР»РµС‚Р°",
+                        'short_description' => 'РєСѓСЂСЃС‹ РїР»Р°РЅРµСЂР° СЃР°РјРѕР»РµС‚Р°',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РЎРёР»РѕРІР°СЏ СѓСЃС‚Р°РЅРѕРІРєР°",
+                        'short_description' => 'РєСѓСЂСЃС‹ РґРІРёРіР°С‚РµР»СЊ',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РЎРёР»РѕРІР°СЏ СѓСЃС‚Р°РЅРѕРІРєР°",
+                        'short_description' => 'РєСѓСЂСЃС‹ РґРІРёРіР°С‚РµР»СЊ',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РљРѕРЅСЃС‚СЂСѓРєС†РёСЏ РІРµСЂС‚РѕР»РµС‚Р° Рё РµРіРѕ СЃРёСЃС‚РµРјС‹. РћРїРёСЃР°РЅРёРµ Рё СЌРєСЃРїР»СѓР°С‚Р°С†РёСЏ",
+                        'short_description' => 'РѕРїРёСЃР°РЅРёРµ РІРµСЂС‚РѕР»РµС‚Р°..',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РџСЂР°РєС‚РёС‡РµСЃРєР°СЏ Р°СЌСЂРѕРґРёРЅР°РјРёРєР°",
+                        'short_description' => 'РєСѓСЂСЃС‹ Р°СЌСЂРѕРґРёРЅР°РјРёРєР°..',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "Р›РµС‚РЅР°СЏ СЌРєСЃРїР»СѓР°С‚Р°С†РёСЏ (СЂР°Р·РґРµР» 4 Р›РµС‚РЅС‹Рµ РґР°РЅРЅС‹Рµ)",
+                        'short_description' => 'РєСѓСЂСЃС‹ Р›Р­',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РљРѕРЅСЃС‚СЂСѓРєС†РёСЏ РІРµСЂС‚РѕР»РµС‚Р° Рё РµРіРѕ СЃРёСЃС‚РµРјС‹. РўРµС…РЅРёС‡РµСЃРєРѕРµ РѕР±СЃР»СѓР¶РёРІР°РЅРёРµ",
+                        'short_description' => 'РєСѓСЂСЃС‹ РўРћ',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РљРѕРЅСЃС‚СЂСѓРєС†РёСЏ СЃРёР»РѕРІРѕР№ СѓСЃС‚Р°РЅРѕРІРєРё. РўРµС…РЅРёС‡РµСЃРєРѕРµ РѕР±СЃР»СѓР¶РёРІР°РЅРёРµ",
+                        'short_description' => 'РєСѓСЂСЃС‹ РўРћ',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "Р Р°РґРёРѕСЌР»РµРєС‚СЂРѕРЅРЅРѕРµ РѕР±РѕСЂСѓРґРѕРІР°РЅРёРµ. РўРµС…РЅРёС‡РµСЃРєРѕРµ РѕР±СЃР»СѓР¶РёРІР°РЅРёРµ",
+                        'short_description' => 'РєСѓСЂСЃС‹ Р Р­Рћ',
+                        'long_description' => '',
+                    ],
+                    [
+                        'title' => "РђРІР°СЂРёР№РЅРѕ-СЃРїР°СЃР°С‚РµР»СЊРЅС‹Рµ СЃСЂРµРґСЃС‚РІР°. РўРµС…РЅРёС‡РµСЃРєРѕРµ РѕРїРёСЃР°РЅРёРµ",
+                        'short_description' => 'РєСѓСЂСЃС‹ Р Р­Рћ',
+                        'long_description' => '',
+                    ],
+                    
+                    
+
+                ]);
+            }
+        }
+
+n===== FILE: C:\1\DatabaseSeeder.php =====n
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // DB::table('categories')->insert(
+        //     [
+        //         [
+        //             'title' => "Р›РµС‚С‡РёРє",
+        //             'description' => 'РєСѓСЂСЃС‹ РґР»СЏ Р»РµС‚С‡РёРєР°',
+        //         ],
+        //         [
+        //             'title' => "Р‘РѕСЂС‚ РёРЅР¶РµРЅРµСЂ",
+        //             'description' => 'РєСѓСЂСЃС‹ РґР»СЏ Р±РѕСЂС‚ РёРЅР¶РµРЅРµСЂР°',
+        //         ],
+        //         [
+        //             'title' => "РРЅР¶РµРЅРµСЂ РђР’",
+        //             'description' => 'РєСѓСЂСЃС‹ РґР»СЏ РёРЅР¶РµРЅРµСЂР° РђР’',
+        //         ],
+        //         [
+        //             'title' => "РРЅР¶РµРЅРµСЂ РђРЎРЈ",
+        //             'description' => 'РєСѓСЂСЃС‹ РґР»СЏ РёРЅР¶РµРЅРµСЂР° РђРЎРЈ',
+        //         ],
+        //         [
+        //             'title' => "РЁС‚СѓСЂРјР°РЅ",
+        //             'description' => 'РєСѓСЂСЃС‹ РґР»СЏ С€С‚СѓСЂРјР°РЅР°',
+        //         ]
+        //     ]
+        // );
+
+        //         DB::table('roles')->insert(
+        //     [
+        //         [
+        //             'rolename' => "РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ",
+        //         ],
+        //         [
+        //             'rolename' => "РРЅСЃС‚СЂСѓРєС‚РѕСЂ",
+        //         ],
+        //         [
+        //             'rolename' => "РћР±СѓС‡Р°РµРјС‹Р№",
+        //         ],
+
+        //     ]
+        // );
+
+        \App\Models\Group::factory(10)->create();
+
+        $this->call([
+            UserSeeder::class,
+            PermissionSeeder::class,
+            GradeSeeder::class,
+            SettingSeeder::class,
+            // CategorySeeder::class,
+            // CourseSeeder::class,
+
+        ]);
+
+        //\App\Models\User::factory(10)->create();
+//        \App\Models\Group::factory(10)->create();
+        //\App\Models\Course::factory(10)->create();
+        //\App\Models\CategoryCourse::factory(15)->create();
+        //\App\Models\Category::factory(5)->create();
+
+                 DB::table('permissions_users')->insert(
+             [
+                 [
+                     'user_id' => 1,
+                     'permission_id' => 1,
+                 ],
+                 [
+                     'user_id' => 1,
+                     'permission_id' => 2,
+                 ],
+
+             ]
+         );
+
+    }
+}
+
+n===== FILE: C:\1\GradeSeeder.php =====n
+<?php
+
+namespace Database\Seeders;   
+use Illuminate\Database\Seeder;
+use App\Models\GradeBoundary;
+
+class GradeSeeder extends Seeder
+{
+    public function run()
+    {
+        $gradeBoundaries = [
+            ['boundary' => 0, 'grade' => '2'],
+            ['boundary' => 35, 'grade' => '3'],
+            ['boundary' => 65, 'grade' => '4'],
+            ['boundary' => 85, 'grade' => '5']
+        ];
+
+        foreach ($gradeBoundaries as $gradeBoundary) {
+            GradeBoundary::create($gradeBoundary);
+        }
+    }
+}
+
+n===== FILE: C:\1\PermissionSeeder.php =====n
+<?php
+
+namespace Database\Seeders;
+use App\Models\Permission;
+use Illuminate\Database\Seeder;
+class PermissionSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+
+        $manageUser = new Permission();
+        $manageUser->name = 'СѓРїСЂР°РІР»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё';
+        $manageUser->slug = 'manage-users';
+        $manageUser->save();
+
+        $createTasks = new Permission();
+        $createTasks->name = 'Create Tasks';
+        $createTasks->slug = 'create-tasks';
+        $createTasks->save();
+
+        $manageCourse = new Permission();
+        $manageCourse->name = 'СѓРїСЂР°РІР»РµРЅРёРµ РєСѓСЂСЃР°РјРё';
+        $manageCourse->slug = 'manage-course';
+        $manageCourse->save();
+    }
+}
+
+
+n===== FILE: C:\1\RoleSeeder.php =====n
+<?php
+
+namespace Database\Seeders;
+use App\Models\Role;
+use Illuminate\Database\Seeder;
+class RoleSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $administrator = new Role();
+        $administrator->rolename = 'РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ';
+        $administrator->slug = 'РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ';
+        $administrator->save();
+        $instructor = new Role();
+        $instructor->rolename = 'РРЅСЃС‚СЂСѓРєС‚РѕСЂ';
+        $instructor->slug = 'РРЅСЃС‚СЂСѓРєС‚РѕСЂ';
+        $instructor->save();
+        $student = new Role();
+        $student->rolename = 'РћР±СѓС‡Р°РµРјС‹Р№';
+        $student->slug = 'РћР±СѓС‡Р°РµРјС‹Р№';
+        $student->save();
+    }
+}
+
+
+n===== FILE: C:\1\SettingSeeder.php =====n
+<?php
+
+namespace Database\Seeders;   
+use Illuminate\Database\Seeder;
+use App\Models\Setting;
+
+class SettingSeeder extends Seeder
+{
+    public function run()
+    {
+        $settings = [
+            ['name' => 'name1', 'value' => '2',  'type' => 'type1'],
+            ['name' => 'name2', 'value' => '3',  'type' => 'type1'],
+            ['name' => 'name3', 'value' => '4',  'type' => 'type1'],
+            ['name' => 'name4', 'value' => '5',  'type' => 'type2'],
+            ['name' => 'name5', 'value' => '55',  'type' => 'type2'],
+            ['name' => 'name6', 'value' => '105',  'type' => 'type3'],
+        ];
+
+        foreach ($settings as $_settings) {
+            Setting::create($_settings);
+        }
+    }
+}
+
+n===== FILE: C:\1\UserSeeder.php =====n
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Permission;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
+class UserSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('users')->insert([
+            [
+                'fio' => 'РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ',
+                'role' => 'РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
+                'role' => 'РРЅСЃС‚СЂСѓРєС‚РѕСЂ',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РџРµС‚СЂРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РЎРёРґРѕСЂРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РљРѕСЂРЅРµРµРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РЎРµРјРµРЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РљСЂСѓРїРЅРѕРІ РњР°РєСЃРёРј Р’РёС‚Р°Р»СЊРµРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РќРµРЅР°РґРѕРІРёС‡ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РџРёРјРµРЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
+                'role' => 'РРЅСЃС‚СЂСѓРєС‚РѕСЂ',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РџРµР»СЊС€ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 1,
+            ],
+            [
+                'fio' => 'РњРѕРёСЃРµРµРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 2,
+            ],
+            [
+                'fio' => 'Р Р°Р±РёРЅРѕРІРёС‡ РҐР°РёРј РРІР°РЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 2,
+            ],
+            [
+                'fio' => 'РњРµРґРІРµРґРµРІ Р”РјРёС‚СЂРёР№ РђРЅР°С‚РѕР»СЊРµРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 2,
+            ],
+            [
+                'fio' => 'РўСЂСѓРЅРѕРІ РРІР°РЅ РЎРµРјРµРЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 2,
+            ],
+            [
+                'fio' => 'РЎРµР»РµР·РЅРµРІ РўРёРјРѕС„РµР№ РњРёС…Р°Р№Р»РѕРІРёС‡',
+                'role' => 'РРЅСЃС‚СЂСѓРєС‚РѕСЂ',
+                'password' => Hash::make('123'),
+                'group_id'=> 2,
+            ],
+            [
+                'fio' => 'РќР°РіРёРµРІ Р”РјРёС‚СЂРёР№ Р’Р»Р°РґРёРјРёСЂРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 3,
+            ],
+            [
+                'fio' => 'РЁРѕР№РіСѓ РЎРµСЂРіРµР№ РљСѓР¶СѓРіРµС‚РѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 3,
+            ],
+            [
+                'fio' => 'Р’РµР»РёРєРѕРІ Р’Р°РґРёРј РРІР°РЅРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 3,
+            ],
+            [
+                'fio' => 'Р¤СѓСЂСЃРѕРІ РђРЅРґСЂРµР№ РР»СЊРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 3,
+            ],
+            [
+                'fio' => 'РЎР°РІРµР»СЊРµРІ РЎРµСЂРіРµР№ Р’СЏС‡РµСЃР»Р°РІРѕРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 3,
+            ],
+            [
+                'fio' => 'РџР°РЅС‡РёРЅ РђР»РµРєСЃР°РЅРґСЂ Р®СЂСЊРµРІРёС‡',
+                'role' => 'РћР±СѓС‡Р°РµРјС‹Р№',
+                'password' => Hash::make('123'),
+                'group_id'=> 3,
+            ],
+        ]);
+    }
+}
+

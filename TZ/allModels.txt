@@ -1,0 +1,594 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Course;
+
+
+class Aircraft extends Model
+{
+    use HasFactory;
+    //protected $guarded =[];
+    protected $table = 'aircrafts';
+    // public function categories() {
+    //        return $this->belongsToMany(Category::class,
+    //        'category_course',
+    //        'course_id',
+    //        'category_id'
+    //     );
+    // }
+//      public function categories() {
+//          return $this->belongsToMany(Category::class);
+//   }
+
+public function courses() {
+   return $this->hasMany(Course::class);
+}
+public function categories() {
+   return $this->hasMany(Category::class);
+}
+
+}
+
+<?php
+
+namespace App\Models;
+use App\Models\Question;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Answer extends Model
+{
+    use HasFactory;
+    protected $guarded = [];
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
+        public function testResults()
+    {
+        return $this->hasMany(TestResult::class);
+    }
+}
+
+<?php
+
+namespace App\Models;
+use App\Traits\Filterable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+
+
+class Aukstructure extends Model
+{
+    use HasFactory;
+    use Filterable;
+    protected $fillable = ['title','course_id','parent_id','type','description','categories','identifier'];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+        public function links()
+    {
+        return $this->hasMany(Link::class);
+    }
+        public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+// потомки родители вспомогательное
+    public function parent()
+    {
+        return $this->belongsTo(Aukstructure::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Aukstructure::class, 'parent_id');
+    }
+ 
+}
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class AukstructureCategory extends Model
+{
+    use HasFactory;
+}
+
+<?php
+
+namespace App\Models;
+
+use App\Traits\Filterable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Aircraft;
+use App\Models\Course;
+use App\Models\User;
+use App\Models\Question;
+
+class Category extends Model
+{
+    use HasFactory;
+    use Filterable;
+    protected $guarded = [];
+    //    public function courses() {
+    //        return $this->belongsToMany(Course::class,
+    //        'category_course',          
+    //        'category_id',
+    //        'course_id'
+    //     );
+
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+    
+    // связь многие ко многим с таблицей пользователей
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+        public function aukstructures()
+    {
+        return $this->belongsToMany(Aukstructure::class);
+    }
+        public function aircraft()
+    {
+        return $this->belongsTo(Aircraft::class);
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+}
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CategoryCourse extends Model
+{
+    use HasFactory;
+    protected $table = 'category_course';
+}
+
+<?php
+
+namespace App\Models;
+
+use App\Traits\Filterable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Group;
+use App\Models\User;
+use App\Models\Aircraft;
+use App\Models\Aukstructure;
+
+class Course extends Model
+{
+    use HasFactory;
+    use Filterable;
+    protected $guarded = [];
+    // public function categories() {
+    //        return $this->belongsToMany(Category::class,
+    //        'category_course',
+    //        'course_id',
+    //        'category_id'
+    //     );
+    // }
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function aircraft()
+    {
+        return $this->belongsTo(Aircraft::class);
+    }
+
+    public function aukstructures() {
+        return $this->hasMany(Aukstructure::class);
+    }
+
+  //  public function groups()
+  //  {
+  //      return $this->belongsToMany(Group::class);
+  //  }
+
+
+     public function group2learnings() {
+           return $this->hasMany(Group2learning::class);
+    }
+
+}
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Favorite extends Model
+{
+    use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'course_id',
+        'title'
+    ];
+
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
+
+    // public function item()
+    // {
+    //     return $this->belongsTo(Item::class);
+    // }
+}
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class File extends Model
+{
+
+//  protected $fillable = [
+//    'name', 'type', 'extension', 'user_id'
+//  ];
+
+  protected $guarded =[]; // разрешение добавления аттрибутов в базу, защищать аттрибут не нужно
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+}
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class GradeBoundary extends Model
+{
+    protected $table = 'grade_boundaries';
+    protected $fillable = ['boundary', 'grade'];
+}
+
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Course;
+use App\Models\User;
+
+class Group extends Model
+{
+    use HasFactory;
+    //protected $guarded =[];
+// public function user()
+//   {
+//     return $this->belongsTo(User::class);
+//   }
+     public function users() {
+           return $this->hasMany(User::class);
+    }
+     public function group2learnings() {
+           return $this->hasMany(Group2learning::class);
+    }
+
+}
+
+<?php
+
+namespace App\Models;
+
+use App\Traits\Filterable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Group2learning extends Model
+{
+    use HasFactory;
+    use Filterable;
+    protected $fillable = ['course_id','group_id','category_id','parent_id'];
+
+// fix связи !!!, имея категорию и курс,я могу определить связь через таблицу
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+        public function category()
+    {
+        return $this->hasOne(Category::class);
+    }
+        public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+}
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+
+class Link extends Model
+{
+    use HasFactory;
+    protected $fillable = ['link','aukstructure_id'];
+    
+    public function aukstructure()
+    {
+        return $this->belongsTo(Aukstructure::class);
+    }
+}
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Permission extends Model
+{
+    use HasFactory;
+
+    // public function roles()
+    // {
+    //     return $this->belongsToMany(Role::class,'permissions_roles');     
+    // }
+}
+
+<?php
+
+namespace App\Models;
+use App\Traits\Filterable;
+use App\Models\Answer;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Question extends Model
+{
+    use HasFactory;
+    use Filterable;
+    //protected $fillable = ['question_text', /* other fillable columns */];
+    protected $guarded = [];
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+}
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Role extends Model
+{
+    use HasFactory;
+
+    public function users() {
+        return $this->belongsToMany(User::class);
+ }
+
+     public function permissions()
+    {
+        return $this->belongsToMany(Permission::class,'permissions_roles');
+    }
+}
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class RoleUser extends Model
+{
+    use HasFactory;
+   // protected $table = 'role_user';
+}
+
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Setting extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['name', 'value', 'type']; // Добавлен столбец "type" в список заполняемых полей
+}
+
+
+                          <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class TestResult extends Model
+{
+    protected $fillable = ['result'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function answer()
+    {
+        return $this->belongsTo(Answer::class);
+    }
+}
+
+<?php
+
+namespace App\Models;
+
+use App\Traits\HasRolesAndPermissions;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+
+
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable, HasRolesAndPermissions;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'fio',
+        'password',
+
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    // public function roles()
+    // {
+    //     return $this->belongsToMany(Role::class);
+    // }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
+    public function courses()
+    {
+        return $this->hasManyThrough(Course::class, Group::class);
+    }
+
+    public function testResults()
+    {
+        return $this->hasMany(TestResult::class);
+    }
+
+
+
+    // связь многие ко многим с таблицей категорий
+//    public function categories()
+//    {
+//        return $this->belongsToMany(Category::class);
+//    }
+
+    // public function courses()
+    // {
+    //     return $this->hasManyThrough(Course::class,Category::class);
+    // }
+
+    //----------------------------------------------
+    // из связанной таблицы Role (если) для текущего пользователя проверить есть ли имя роли равное инструктору или администратору
+    // public function isAdmin()
+    // {
+    //     //return $this->where('role', 'Администратор')->exists();
+    //     return $this->roles()->where('rolename', 'Администратор')->exists();
+    // }
+    // public function isInstructor()
+    // {
+    //     //return $this->where('role', 'Инструктор')->exists();
+    //     return $this->roles()->where('rolename', 'Инструктор')->exists();
+    // }
+    // public function isStudent()
+    // {
+    //     //return $this->where('role', 'Обучаемый')->exists();
+    //     return $this->roles()->where('rolename', 'Обучаемый')->exists();
+    // }
+    //----------------------------------------------
+    public function getAllPermissionsAttribute()
+    {
+        $permissions = [];
+        foreach (Permission::all() as $permission) {
+            if ($this->user()->can($permission->name)) {
+                $permissions[] = $permission->name;
+            }
+        }
+        return $permissions;
+    }
+}

@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Dinamika LMS API
+  version: "1.0.0"
+servers:
+  - url: /api/v1
+paths:
+  /auth/login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                password:
+                  type: string
+              required:
+                - identifier
+                - password
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: {type: string}
+                  user: {type: object}
+        '401':
+          description: Unauthorized
+  /courses:
+    get:
+      summary: Get list of courses
+      parameters:
+        - in: query
+          name: page
+          schema: {type: integer}
+        - in: query
+          name: per_page
+          schema: {type: integer}
+        - in: query
+          name: q
+          schema: {type: string}
+      responses:
+        '200':
+          description: List of courses
+    post:
+      summary: Create a course
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: {type: string}
+                short_description: {type: string}
+              required: [title]
+      responses:
+        '201':
+          description: Created
+  /questions/import:
+    post:
+      summary: Import GIFT file
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '202':
+          description: Accepted (queued)
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

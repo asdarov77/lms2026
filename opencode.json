@@ -1,0 +1,75 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "postgres": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-postgres"],
+      "environment": {
+        "PG_HOST": "127.0.0.1",
+        "PG_PORT": "5432",
+        "PG_USER": "lms",
+        "PG_PASSWORD": "lms",
+        "PG_DATABASE": "lms2025_db"
+      },
+      "enabled": true
+    },
+    "http": {
+      "type": "local",
+      "command": ["npx", "-y", "dkmaker-mcp-rest-api"],
+      "environment": {
+        "REST_BASE_URL": "http://localhost:8000"
+      },
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp"],
+      "enabled": true
+    },
+    "filesystem": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem"],
+      "enabled": true
+    },
+    "git": {
+      "type": "local",
+      "command": ["npx", "-y", "mcp-git"],
+      "enabled": true
+    },
+    "fetch": {
+      "type": "local",
+      "command": ["npx", "-y", "mcp-fetch"],
+      "enabled": true
+    }
+  },
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen3:14b-q4_K_M": {
+          "name": "Qwen3 14B"
+        },
+        "deepseek-r1:14b-qwen-distill-q4_K_M": {
+          "name": "DeepSeek R1 14B"
+        },
+        "deepcoder:latest": {
+          "name": "DeepCoder"
+        },
+        "qwen3-coder:30b": {
+          "name": "Qwen3 Coder 30B"
+        },
+        "gpt-oss:20b": {
+          "name": "GPT-Oss 20B"
+        },
+        "WhiteRabbitNeo/Llama-3.1-WhiteRabbitNeo-2-8B:latest": {
+          "name": "WhiteRabbitNeo 8B"
+        }
+      }
+    }
+  },
+  "model": "ollama/gpt-oss:20b"
+}

@@ -1,0 +1,45 @@
+{
+  "name": "lms2025-e2e-tests",
+  "version": "1.0.0",
+  "description": "End-to-end tests for LMS2025",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:smoke": "playwright test tests/smoke",
+    "test:auth": "playwright test tests/auth",
+    "test:crud": "playwright test tests/crud",
+    "test:crud:course": "playwright test tests/crud/course.spec.ts",
+    "test:crud:user": "playwright test tests/crud/user.spec.ts",
+    "test:crud:group": "playwright test tests/crud/group.spec.ts",
+    "test:report": "playwright show-report",
+    "test:codegen": "playwright codegen",
+    "puppeteer:test": "node puppeteer/tests/run.js",
+    "lint": "eslint e2e/**/*.ts",
+    "clean:artifacts": "rm -rf e2e/test-results e2e/playwright-report e2e/playwright/.cache"
+  },
+  "keywords": [
+    "e2e",
+    "testing",
+    "playwright",
+    "puppeteer",
+    "lms"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.42.0",
+    "@types/node": "^20.11.0",
+    "@types/pg": "^8.18.0",
+    "dotenv": "^16.4.0",
+    "eslint": "^8.56.0",
+    "pg": "^8.11.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.0"
+  }
+}

@@ -1,0 +1,35 @@
+[verbose] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+[warning] No auth token available for request
+[log] Checking isAdmin, user: Proxy(Object)
+[log] User role: Администратор
+[log] Fetching dashboard data...
+[log] Setting auth token in request: 5|PItsaMGO...
+[log] Dashboard response: {stats: Object, activities: Array(5), deadlines: Array(0)}
+[log] Fetching user data...
+[log] Setting auth token in request: 5|PItsaMGO...
+[log] Fetching user data...
+[log] Setting auth token in request: 5|PItsaMGO...
+[log] User data response: {id: 1, email: admin@example.com, email_verified_at: null, fio: Администратор, role: Администратор}
+[log] User data stored: Proxy(Object)
+[log] User data response: {id: 1, email: admin@example.com, email_verified_at: null, fio: Администратор, role: Администратор}
+[log] User data stored: Proxy(Object)
+[log] Checking isAdmin, user: Proxy(Object)
+[log] User role: Администратор
+[log] Setting auth token in request: 5|PItsaMGO...
+[log] Creating group with sanitized data: {"groupname":"Тестовая группа 1771582441931","groupdescription":"Описание","is_active":true,"max_users":null,"settings":{}}
+[log] Request headers: {Accept: application/json, text/plain, */*, Content-Type: undefined, X-Requested-With: XMLHttpRequest, Authorization: Bearer 5|PItsaMGO3psLT1hrKC4H3hGbqIea3daCXU8oILnC394162ba}
+[log] Create group API response: {data: Object, status: 201, statusText: Created, headers: on, config: Object}
+[log] Group added to store: {groupname: Тестовая группа 1771582441931, groupdescription: Описание, is_active: true, max_users: null, settings: Array(0)}
+[log] Setting auth token in request: 5|PItsaMGO...
+[log] Fetching groups... Token present: true
+[log] Auth headers: {Accept: application/json, text/plain, */*, Content-Type: undefined, X-Requested-With: XMLHttpRequest, Authorization: Bearer 5|PItsaMGO3psLT1hrKC4H3hGbqIea3daCXU8oILnC394162ba}
+[log] Attempting to fetch groups from /groups
+[log] Successfully fetched from /groups
+[log] Full API response: {data: Object, status: 200, statusText: OK, headers: on, config: Object}
+[log] Response data structure: [current_page, data, first_page_url, from, last_page, last_page_url, links, next_page_url, path, per_page, prev_page_url, to, total]
+[log] Response has nested data array with 6 items
+[log] Processed groups: Proxy(Array)
+[log] Setting auth token in request: 5|PItsaMGO...
+[log] Groups loaded: Proxy(Array)
+[log] Setting auth token in request: 5|PItsaMGO...
+[log] Users loaded: Proxy(Array)
