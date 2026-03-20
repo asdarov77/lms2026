@@ -1,6 +1,5 @@
 <template>
-  <app-layout>
-    <v-container fluid>
+  <v-container fluid>
       <!-- Welcome Section -->
       <v-row class="mb-4">
         <v-col cols="12">
@@ -132,18 +131,13 @@
         </v-col>
       </v-row>
     </v-container>
-  </app-layout>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default {
-  components: {
-    AppLayout
-  },
   setup() {
     const authStore = useAuthStore()
     const loading = ref(false)

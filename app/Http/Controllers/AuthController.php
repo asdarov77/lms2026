@@ -75,11 +75,15 @@ class AuthController extends Controller
             'password.required' => 'Пароль обязателен для ввода',
         ]);
 
-        $user = User::where('fio', $fields['fio'])->first();
+        $login = trim($fields['fio']);
+        $user = User::query()
+            ->where('fio', $login)
+            ->orWhere('email', $login)
+            ->first();
 
         if (! $user || ! Hash::check($fields['password'], $user->password)) {
             return response()->json([
-                'message' => 'неверный пароль',
+                'message' => 'Неверный логин или пароль',
             ], 401);
         }
 

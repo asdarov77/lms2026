@@ -37,6 +37,16 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
+      path: '/courses/:id/learn',
+      name: 'courses.learn',
+      component: () => import('@/Pages/CourseManifest.vue'),
+      props: route => ({
+        idEdit: Number(route.params.id),
+        idCategory: Number(route.query.idCategory)
+      }),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/courses/my',
       name: 'my-courses',
       component: () => import('@/Pages/CoursesMy.vue'),
@@ -108,6 +118,12 @@ const router = createRouter({
       name: 'edit-enrollment',
       component: () => import('@/Pages/EditEnrollment.vue'),
       props: route => ({ id: Number(route.params.id) }),
+      meta: { requiresAuth: true, requiresAdmin: true }
+    },
+    {
+      path: '/classes',
+      name: 'classes',
+      component: () => import('@/Pages/Course/AddClass.vue'),
       meta: { requiresAuth: true, requiresAdmin: true }
     },
     {

@@ -100,9 +100,9 @@
               v-model="selectedDbAircraft"
               :items="dbAircrafts"
               item-title="path"
-              item-value="id"
+              item-value="path"
               label="Выберите класс для импорта курсов"
-              return-object
+              :return-object="false"
               density="compact"
               variant="outlined"
               class="mb-4"
@@ -119,7 +119,7 @@
             <v-divider class="my-4"></v-divider>
             
             <div v-if="selectedDbAircraft" class="text-center">
-              <p class="text-h6 mb-2">Выбран класс: {{ selectedDbAircraft.path }}</p>
+              <p class="text-h6 mb-2">Выбран класс: {{ getSelectedAircraftPath() }}</p>
               <v-btn
                 color="success"
                 size="large"
@@ -206,6 +206,7 @@
 
 <script>
 import { useCourseStore } from '@/stores/courseStore';
+import { useAuthStore } from '@/stores/auth';
 
 export default {
   name: 'ImportCourses',
@@ -268,12 +269,18 @@ export default {
       return this.dbAircrafts.some(a => a.path === path);
     },
     
+    getSelectedAircraftPath() {
+      if (!this.selectedDbAircraft) return '';
+      if (typeof this.selectedDbAircraft === 'string') return this.selectedDbAircraft;
+      return this.selectedDbAircraft?.path || '';
+    },
+    
     async importClass(path) {
       this.importingClass = path;
       
       try {
         const courseStore = useCourseStore();
-        const authStore = courseStore.$pinia._s.get('auth');
+        const authStore = useAuthStore();
         const api = authStore.getApi();
         await api.post('/classes', {
           path: path,
@@ -303,8 +310,20 @@ export default {
       
       try {
         const courseStore = useCourseStore();
+
+        const selectedPath = typeof this.selectedDbAircraft === 'string'
+          ? this.selectedDbAircraft
+          : this.selectedDbAircraft?.path;
+
+        // Find the aircraft object in dbAircrafts array by path
+        const aircraft = this.dbAircrafts.find(a => a.path === selectedPath);
+        
+        if (!aircraft) {
+          throw new Error('Выбранный класс не найден');
+        }
+        
         const result = await courseStore.importCourse({
-          aircraft_path: this.selectedDbAircraft.path,
+          aircraft_path: aircraft.path,
           force: this.clearDb
         });
 
@@ -343,7 +362,7 @@ export default {
       
       try {
         const courseStore = useCourseStore();
-        const authStore = courseStore.$pinia._s.get('auth');
+        const authStore = useAuthStore();
         const api = authStore.getApi();
         await api.post('/import/clear');
           this.$root.$emit('show-snackbar', {

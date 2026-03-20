@@ -135,8 +135,17 @@ class ImportController extends Controller
 
                 $manifestPath = $fullCoursePath.'/imsmanifest.xml';
 
-                if (Storage::exists("{$aircraftPath}/{$courseFolder}/imsmanifest.xml")) {
-                    $contents = Storage::get("{$aircraftPath}/{$courseFolder}/imsmanifest.xml");
+                $manifestStoragePathPrivate = "private/{$aircraftPath}/{$courseFolder}/imsmanifest.xml";
+                $manifestStoragePathPublic = "{$aircraftPath}/{$courseFolder}/imsmanifest.xml";
+
+                if (Storage::exists($manifestStoragePathPrivate)) {
+                    $contents = Storage::get($manifestStoragePathPrivate);
+                    $manifestResult = $this->parseManifest($contents, $aircraft->id, $courseFolder, $aircraftPath);
+                    $result['courses_created']++;
+                    $result['categories_created'] += $manifestResult['categories_created'];
+                    $result['aukstructures_created'] += $manifestResult['aukstructures_created'];
+                } elseif (Storage::exists($manifestStoragePathPublic)) {
+                    $contents = Storage::get($manifestStoragePathPublic);
                     $manifestResult = $this->parseManifest($contents, $aircraft->id, $courseFolder, $aircraftPath);
                     $result['courses_created']++;
                     $result['categories_created'] += $manifestResult['categories_created'];
@@ -245,13 +254,21 @@ class ImportController extends Controller
         }
 
         foreach ($xml->course->category as $key => $c) {
+            $code = trim((string) $c->attributes()['shortname']);
+            $title = trim((string) $c->attributes()['name']);
+
+            if ($code === '') {
+                continue;
+            }
+
+            // Categories are tied to aircraft_id (as in old project)
             Category::updateOrCreate(
                 [
-                    'title' => (string) $c->attributes()['name'],
+                    'code' => $code,
                     'aircraft_id' => $aircraftId,
                 ],
                 [
-                    'code' => (string) $c->attributes()['shortname'],
+                    'title' => $title !== '' ? $title : $code,
                     'description' => 'Импортировано из manifest',
                 ]
             );
@@ -344,7 +361,12 @@ class ImportController extends Controller
                 if ($attrsCat) {
                     $curCats = explode(',', $attrsCat);
                     foreach ($curCats as $curCat) {
-                        $curCatId = Category::where('code', trim($curCat))
+                        $curCatCode = trim($curCat);
+                        if ($curCatCode === '') {
+                            continue;
+                        }
+
+                        $curCatId = Category::where('code', $curCatCode)
                             ->where('aircraft_id', $aircraftId)
                             ->pluck('id')
                             ->first();
@@ -377,15 +399,17 @@ class ImportController extends Controller
     public function clearDatabase()
     {
         try {
+            // Clear all imported data (as in old project)
             DB::table('answers')->truncate();
             DB::table('questions')->truncate();
             DB::table('links')->truncate();
             DB::table('aukstructure_category')->truncate();
             DB::table('category_course')->truncate();
-            DB::table('aukstructures')->truncate();
             DB::table('categories')->truncate();
+            DB::table('aukstructures')->truncate();
             DB::table('courses')->truncate();
             DB::table('aircrafts')->truncate();
+            DB::table('group2learnings')->truncate();
 
             Log::info('База данных очищена для импорта');
 

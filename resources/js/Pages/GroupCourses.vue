@@ -182,7 +182,7 @@
                     label="Группа"
                     :rules="[v => !!v || 'Выберите группу']"
                     required
-                    return-object
+                    :return-object="false"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" md="6">
@@ -194,7 +194,7 @@
                     label="Класс (воздушное судно)"
                     :rules="[v => !!v || 'Выберите класс']"
                     required
-                    return-object
+                    :return-object="false"
                     @update:model-value="onAircraftChange"
                   ></v-select>
                 </v-col>
@@ -207,7 +207,7 @@
                     label="Специальность"
                     :rules="[v => !!v || 'Выберите специальность']"
                     required
-                    return-object
+                    :return-object="false"
                     :disabled="!enrollmentForm.aircraft_id"
                     @update:model-value="onCategoryChange"
                   ></v-select>
@@ -221,7 +221,7 @@
                     label="Курс"
                     :rules="[v => !!v || 'Выберите курс']"
                     required
-                    return-object
+                    :return-object="false"
                     :disabled="!enrollmentForm.category_id"
                   ></v-select>
                 </v-col>
@@ -649,6 +649,7 @@ export default {
     const filteredCourseItems = computed(() => {
       if (!enrollmentForm.value.category_id) return []
       return courses.value.filter(course => {
+        if (enrollmentForm.value.aircraft_id && course.aircraft_id !== enrollmentForm.value.aircraft_id) return false
         if (!course.categories) return false
         return course.categories.some(cat => cat.id === enrollmentForm.value.category_id)
       })
@@ -717,9 +718,7 @@ export default {
       if (aircrafts.value.length === 0) {
         fetchAircrafts();
       }
-      if (categories.value.length === 0) {
-        fetchCategories();
-      }
+      // Categories depend on selected aircraft, so they are loaded on aircraft change
       
       enrollmentDialog.value = true;
     }
@@ -727,6 +726,7 @@ export default {
     const onAircraftChange = (aircraft) => {
       enrollmentForm.value.category_id = null;
       enrollmentForm.value.course_id = null;
+      fetchCategories();
     }
 
     const onCategoryChange = (category) => {
@@ -751,32 +751,15 @@ export default {
     const saveEnrollment = async () => {
       saving.value = true;
       try {
-        // Debug log before form submission
-        console.log('Form values before submission:', enrollmentForm.value);
-        
-        // Get category_id from the selected course
-        let categoryId = null;
-        if (enrollmentForm.value.course_id && typeof enrollmentForm.value.course_id === 'object') {
-          categoryId = enrollmentForm.value.course_id.category_id;
-          // Log selected course information
-          console.log('Selected course:', enrollmentForm.value.course_id);
-          console.log('Category ID from course:', categoryId);
-        } else if (enrollmentForm.value.category_id) {
-          categoryId = enrollmentForm.value.category_id.id || enrollmentForm.value.category_id;
-        }
-        
         const payload = {
-          group_id: enrollmentForm.value.group_id.id,
-          course_id: [enrollmentForm.value.course_id.id], // Array to match server expectation
-          category_id: categoryId,
+          group_id: enrollmentForm.value.group_id,
+          course_id: [enrollmentForm.value.course_id], // Array to match server expectation
+          category_id: enrollmentForm.value.category_id,
           teacher: enrollmentForm.value.teacher,
           typeOfLesson: enrollmentForm.value.typeOfLesson,
           study_from: enrollmentForm.value.study_from,
           study_to: enrollmentForm.value.study_to
         };
-        
-        // Log the final payload
-        console.log('Sending payload:', payload);
         
         // Use the enrollment store to create the enrollment
         const result = await enrollmentStore.createEnrollment(payload);
@@ -852,7 +835,12 @@ export default {
     const fetchCategories = async () => {
       try {
         const apiUrl = import.meta.env.VITE_APP_URL || 'http://localhost:8000'
-        const response = await fetch(`${apiUrl}/api/categories`, {
+        let url = `${apiUrl}/api/categories`
+        if (enrollmentForm.value.aircraft_id) {
+          url += `?aircraft_id=${enrollmentForm.value.aircraft_id}`
+        }
+
+        const response = await fetch(url, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'

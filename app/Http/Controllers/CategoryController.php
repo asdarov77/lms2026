@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Category;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,10 +13,26 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $category = Category::all();
-        return response()->json($category);
+        $aircraftId = $request->query('aircraft_id');
+
+        if ($aircraftId) {
+            $categories = Category::query()
+                ->where('aircraft_id', $aircraftId)
+                ->withCount('courses')
+                ->orderBy('title')
+                ->get();
+
+            return response()->json($categories);
+        }
+
+        $categories = Category::query()
+            ->withCount('courses')
+            ->orderBy('title')
+            ->get();
+
+        return response()->json($categories);
     }
 
     /**

@@ -151,7 +151,7 @@
                   color="primary"
                   variant="tonal"
                   size="small"
-                  :to="`/courses/${course.id}/learn`"
+                  @click.stop="openCourseLearning(course)"
                   prepend-icon="mdi-school"
                 >
                   Обучение
@@ -216,7 +216,7 @@ const placeholderImage = 'https://via.placeholder.com/300x140?text=Курс'
 
 // Computed properties
 const filteredCategories = computed(() => {
-  if (!selectedAircraft.value) return categories.value
+  if (!selectedAircraft.value) return []
   return categories.value.filter(cat => cat.aircraft_id === selectedAircraft.value)
 })
 
@@ -288,7 +288,12 @@ const fetchAircrafts = async () => {
 
 const fetchCategories = async () => {
   try {
-    const response = await fetch(`${apiUrl}/api/categories`, {
+    let url = `${apiUrl}/api/categories`
+    if (selectedAircraft.value) {
+      url += `?aircraft_id=${selectedAircraft.value}`
+    }
+
+    const response = await fetch(url, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json'
@@ -332,7 +337,10 @@ const selectAircraft = async (aircraftId) => {
     selectedAircraft.value = aircraftId
   }
   selectedCategory.value = null
-  await fetchCourses()
+  await Promise.all([
+    fetchCategories(),
+    fetchCourses()
+  ])
 }
 
 const selectCategory = async (categoryId) => {
@@ -344,7 +352,12 @@ const openCourseManifest = (course) => {
 }
 
 const openCourseLearning = (course) => {
-  router.push(`/courses/${course.id}/learn`)
+  const idCategory = selectedCategory.value || course?.categories?.[0]?.id
+  router.push({
+    name: 'courses.learn',
+    params: { id: course.id },
+    query: { idCategory }
+  })
 }
 
 // Initial load
